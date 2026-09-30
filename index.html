@@ -1,0 +1,2886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAA Unit II — IPU Mid-Sem</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#f4f1ea;
+  --paper:#fffdf8;
+  --ink:#171717;
+  --muted:#716d64;
+  --line:#d8d2c5;
+  --red:#c94738;
+  --red-dark:#9e3026;
+  --yellow:#e9c35b;
+  --green:#55765f;
+  --blue:#506c85;
+  --shadow:0 12px 35px rgba(23,23,23,.08);
+  --radius:16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:
+    radial-gradient(circle at 10% 10%,rgba(201,71,56,.035),transparent 25%),
+    var(--bg);
+  color:var(--ink);
+  font-family:Manrope,sans-serif;
+  line-height:1.65;
+}
+
+::selection{background:var(--yellow)}
+
+button{
+  font:inherit;
+  cursor:pointer;
+}
+
+code,pre,.mono{
+  font-family:"DM Mono",monospace;
+}
+
+/* NAV */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:68px;
+  background:rgba(244,241,234,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav-inner{
+  width:min(1200px,calc(100% - 36px));
+  height:100%;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  letter-spacing:-.04em;
+}
+
+.brand-mark{
+  width:31px;
+  height:31px;
+  background:var(--red);
+  color:white;
+  display:grid;
+  place-items:center;
+  border-radius:7px;
+  font-family:"DM Mono";
+  font-size:12px;
+  transform:rotate(-3deg);
+}
+
+.nav-links{
+  display:flex;
+  gap:24px;
+  list-style:none;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
+
+.nav-links a:hover{color:var(--ink)}
+
+/* LAYOUT */
+
+.container{
+  width:min(1200px,calc(100% - 36px));
+  margin:auto;
+}
+
+.hero{
+  padding:75px 0 55px;
+  display:grid;
+  grid-template-columns:1.4fr .6fr;
+  gap:60px;
+  align-items:end;
+}
+
+.eyebrow{
+  color:var(--red);
+  font-family:"DM Mono";
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:15px;
+}
+
+h1{
+  font-size:clamp(48px,7vw,84px);
+  line-height:.94;
+  letter-spacing:-.075em;
+}
+
+h1 span{color:var(--red)}
+
+.hero-text{
+  max-width:700px;
+  margin-top:25px;
+  color:var(--muted);
+}
+
+.hero-note{
+  border-left:3px solid var(--red);
+  padding-left:20px;
+}
+
+.hero-note strong{
+  display:block;
+  font-size:30px;
+  letter-spacing:-.05em;
+}
+
+.hero-note small{color:var(--muted)}
+
+.progress{
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:22px 0;
+}
+
+.progress-top{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:9px;
+}
+
+.progress-bar{
+  height:7px;
+  background:#ddd8cc;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  width:0;
+  height:100%;
+  background:var(--red);
+  transition:.3s;
+}
+
+/* SEARCH */
+
+.tools{
+  padding:30px 0 5px;
+  display:flex;
+  gap:12px;
+}
+
+.search{
+  flex:1;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:13px 16px;
+  outline:none;
+}
+
+.search:focus{border-color:var(--red)}
+
+.tool-btn{
+  background:var(--ink);
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:0 18px;
+}
+
+/* SECTIONS */
+
+.section{
+  padding:65px 0 25px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:30px;
+  margin-bottom:25px;
+}
+
+.section-head h2{
+  font-size:38px;
+  line-height:1;
+  letter-spacing:-.06em;
+}
+
+.section-head p{
+  max-width:500px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* TOPIC CARDS */
+
+.topic{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  margin-bottom:12px;
+  overflow:hidden;
+  transition:.2s;
+}
+
+.topic:hover{
+  box-shadow:var(--shadow);
+}
+
+.topic-header{
+  width:100%;
+  background:none;
+  border:0;
+  text-align:left;
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.topic-num{
+  font-family:"DM Mono";
+  color:var(--muted);
+  font-size:11px;
+  min-width:38px;
+}
+
+.topic-title{
+  flex:1;
+}
+
+.topic-title h3{
+  font-size:20px;
+  letter-spacing:-.04em;
+}
+
+.topic-title p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.topic-arrow{
+  font-size:20px;
+  transition:.25s;
+}
+
+.topic.open .topic-arrow{
+  transform:rotate(90deg);
+}
+
+.topic-check{
+  width:27px;
+  height:27px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:white;
+  color:transparent;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+}
+
+.topic.completed .topic-check{
+  background:var(--green);
+  color:white;
+  border-color:var(--green);
+}
+
+/* CONTENT */
+
+.topic-content{
+  display:none;
+  border-top:1px solid var(--line);
+  padding:30px;
+}
+
+.topic.open .topic-content{
+  display:block;
+}
+
+.content-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.block{
+  margin-bottom:25px;
+}
+
+.block.full{
+  grid-column:1/-1;
+}
+
+.block h4{
+  font-size:16px;
+  margin-bottom:9px;
+  letter-spacing:-.03em;
+}
+
+.block h5{
+  font-size:13px;
+  margin:17px 0 6px;
+}
+
+.block p{
+  color:#4f4b44;
+  font-size:14px;
+}
+
+.block ul,.block ol{
+  padding-left:20px;
+  color:#4f4b44;
+  font-size:14px;
+}
+
+.block li{margin:5px 0}
+
+.definition{
+  background:#ebe6db;
+  border-left:4px solid var(--red);
+  padding:17px 20px;
+  border-radius:8px;
+  font-size:14px;
+}
+
+.exam{
+  background:#fff8dd;
+  border:1px solid #ead89c;
+  padding:18px;
+  border-radius:10px;
+}
+
+.exam strong{
+  color:var(--red-dark);
+}
+
+.note{
+  background:#edf1ee;
+  border-left:4px solid var(--green);
+  padding:16px 18px;
+  border-radius:8px;
+  font-size:13px;
+}
+
+.warning{
+  background:#f8e9e6;
+  border-left:4px solid var(--red);
+  padding:16px 18px;
+  border-radius:8px;
+  font-size:13px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:13px 0;
+  font-size:13px;
+  background:white;
+}
+
+th,td{
+  border:1px solid var(--line);
+  padding:9px 11px;
+  text-align:left;
+}
+
+th{
+  background:#ebe6db;
+  font-weight:800;
+}
+
+pre{
+  background:#1d1d1d;
+  color:#f5f1e7;
+  padding:20px;
+  border-radius:10px;
+  overflow:auto;
+  font-size:12px;
+  line-height:1.7;
+  margin:13px 0;
+}
+
+.formula{
+  background:#e8e2d4;
+  border-radius:9px;
+  padding:15px;
+  font-family:"DM Mono";
+  font-size:14px;
+  margin:10px 0;
+}
+
+/* MINI DIAGRAM */
+
+.tree{
+  background:#faf8f1;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:20px;
+  overflow:auto;
+}
+
+.tree pre{
+  margin:0;
+}
+
+/* CHECKLIST */
+
+.checklist{
+  display:grid;
+  gap:8px;
+}
+
+.check-item{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:12px 14px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-size:13px;
+}
+
+.check-item input{
+  accent-color:var(--red);
+}
+
+/* SUMMARY */
+
+.summary{
+  margin-top:45px;
+  background:var(--ink);
+  color:white;
+  border-radius:20px;
+  padding:38px;
+}
+
+.summary h2{
+  font-size:34px;
+  line-height:1;
+  letter-spacing:-.05em;
+  margin-bottom:25px;
+}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.summary-card{
+  border-top:1px solid #444;
+  padding-top:15px;
+}
+
+.summary-card strong{
+  color:var(--yellow);
+  display:block;
+  margin-bottom:6px;
+}
+
+.summary-card span{
+  color:#aaa;
+  font-size:12px;
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid var(--line);
+  margin-top:70px;
+  padding:35px 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+footer .container{
+  display:flex;
+  justify-content:space-between;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+  .hero{
+    grid-template-columns:1fr;
+    gap:35px;
+  }
+
+  .content-grid{
+    grid-template-columns:1fr;
+  }
+
+  .block.full{
+    grid-column:auto;
+  }
+
+  .summary-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:600px){
+  .container,.nav-inner{
+    width:calc(100% - 26px);
+  }
+
+  .nav-links{display:none}
+
+  .hero{
+    padding:50px 0 40px;
+  }
+
+  h1{font-size:52px}
+
+  .section{
+    padding-top:50px;
+  }
+
+  .section-head{
+    display:block;
+  }
+
+  .section-head h2{
+    font-size:31px;
+    margin-bottom:12px;
+  }
+
+  .topic-content{
+    padding:20px;
+  }
+
+  .topic-header{
+    padding:18px;
+  }
+
+  .topic-title h3{
+    font-size:17px;
+  }
+
+  .summary{
+    padding:25px;
+  }
+
+  .summary-grid{
+    grid-template-columns:1fr;
+  }
+
+  footer .container{
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .tools{
+    flex-direction:column;
+  }
+
+  .tool-btn{
+    padding:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-mark">II</div>
+      <span>DAA / UNIT 02</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#greedy">Greedy</a></li>
+      <li><a href="#mst">MST</a></li>
+      <li><a href="#backtracking">Backtracking</a></li>
+      <li><a href="#revision">Revision</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<section class="hero container">
+  <div>
+    <div class="eyebrow">IPU / Mid-Sem / Design & Analysis of Algorithms</div>
+
+    <h1>
+      Unit II.<br>
+      <span>Learn it.</span><br>
+      Solve it.
+    </h1>
+
+    <p class="hero-text">
+      Complete revision notes for Greedy Methods and Backtracking.
+      Every topic contains the basic idea, exam definition, algorithm,
+      worked examples, complexity and common mistakes.
+    </p>
+  </div>
+
+  <div class="hero-note">
+    <strong id="progressCount">0 / 13</strong>
+    <small>topics marked complete</small>
+  </div>
+</section>
+
+<section class="progress">
+  <div class="container">
+    <div class="progress-top">
+      <span>UNIT II PROGRESS</span>
+      <span id="progressPercent">0%</span>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+<div class="tools">
+  <input
+    class="search"
+    id="search"
+    placeholder="Search: Dijkstra, Huffman, 8 Queens, complexity..."
+  >
+
+  <button class="tool-btn" onclick="expandAll()">
+    Expand all
+  </button>
+
+  <button class="tool-btn" onclick="collapseAll()">
+    Collapse
+  </button>
+</div>
+
+
+<!-- =========================================================
+     GREEDY
+========================================================= -->
+
+<section class="section" id="greedy">
+
+<div class="section-head">
+  <div>
+    <div class="eyebrow">01 / Greedy Method</div>
+    <h2>Choose well.<br>Repeat.</h2>
+  </div>
+
+  <p>
+    Greedy algorithms construct a solution by repeatedly making the
+    best feasible local choice.
+  </p>
+</div>
+
+
+<!-- 1 -->
+
+<article class="topic" data-title="general greedy method">
+<button class="topic-header" onclick="toggleTopic(this)">
+  <span class="topic-num">01</span>
+
+  <span class="topic-title">
+    <h3>General Greedy Method</h3>
+    <p>Foundation — understand this before the applications.</p>
+  </span>
+
+  <span class="topic-check"
+    onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+  <span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>What is the Greedy Method?</h4>
+
+<div class="definition">
+<strong>Exam definition:</strong>
+The greedy method is an algorithmic technique that constructs a solution
+step-by-step by selecting the locally optimal feasible choice at each stage,
+with the aim of obtaining a globally optimal solution.
+</div>
+</div>
+
+<div class="block">
+<h4>Simple idea</h4>
+
+<p>
+Imagine you need to make a decision repeatedly. At every step, instead of
+considering every possible future combination, greedy says:
+</p>
+
+<div class="formula">
+Choose the best option available RIGHT NOW.
+</div>
+
+<p>
+Then continue with the remaining problem.
+</p>
+</div>
+
+<div class="block">
+<h4>Local vs Global Optimum</h4>
+
+<ul>
+<li><strong>Local optimum:</strong> best choice at the current step.</li>
+<li><strong>Global optimum:</strong> best complete solution.</li>
+</ul>
+
+<div class="warning">
+A locally optimal choice does NOT always produce a globally optimal solution.
+Greedy must only be used when the problem has the required properties.
+</div>
+</div>
+
+<div class="block">
+<h4>Greedy-Choice Property</h4>
+
+<p>
+A problem has the greedy-choice property when a globally optimal solution
+can be obtained by making an appropriate locally optimal choice first.
+</p>
+</div>
+
+<div class="block">
+<h4>Optimal Substructure</h4>
+
+<p>
+A problem has optimal substructure if an optimal solution contains optimal
+solutions to its relevant smaller subproblems.
+</p>
+</div>
+
+<div class="block full">
+<h4>General process</h4>
+
+<pre>
+S = empty solution
+
+while candidates remain:
+
+    select the best candidate
+
+    if candidate is feasible:
+        add candidate to S
+
+return S
+</pre>
+</div>
+
+<div class="block">
+<h4>Important terms</h4>
+
+<ul>
+<li><strong>Candidate set:</strong> available choices.</li>
+<li><strong>Selection function:</strong> chooses the best candidate.</li>
+<li><strong>Feasibility function:</strong> checks whether it can be used.</li>
+<li><strong>Objective:</strong> maximize or minimize something.</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Applications in this unit</h4>
+
+<ul>
+<li>Fractional Knapsack</li>
+<li>Huffman Coding</li>
+<li>Job Sequencing</li>
+<li>Minimum Spanning Tree</li>
+<li>Dijkstra's Algorithm</li>
+</ul>
+</div>
+
+<div class="block full">
+<div class="exam">
+<strong>What to write for a 5-mark theory question:</strong>
+Definition → greedy-choice property → optimal substructure →
+general procedure → one example/application → complexity discussion.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 2 -->
+
+<article class="topic" data-title="fractional knapsack knapsack">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">02</span>
+
+<span class="topic-title">
+<h3>Fractional Knapsack</h3>
+<p>Profit/weight ratio → sort → fill.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Problem</h4>
+
+<div class="definition">
+You have items with weights and profits and a knapsack with limited
+capacity. Maximize total profit without exceeding the capacity.
+Items may be divided into fractions.
+</div>
+</div>
+
+<div class="block">
+<h4>Greedy rule</h4>
+
+<div class="formula">
+Profit / Weight = profit obtained per unit weight
+</div>
+
+<p>
+Calculate this ratio for every item and sort in descending order.
+Take as much as possible from the item with the highest ratio.
+</p>
+</div>
+
+<div class="block">
+<h4>Fractional vs 0/1</h4>
+
+<table>
+<tr>
+<th>Feature</th>
+<th>Fractional</th>
+<th>0/1</th>
+</tr>
+<tr>
+<td>Split item?</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Greedy?</td>
+<td>Yes</td>
+<td>Not generally</td>
+</tr>
+<tr>
+<td>Common approach</td>
+<td>Greedy</td>
+<td>Dynamic Programming</td>
+</tr>
+</table>
+</div>
+
+<div class="block full">
+<h4>Worked example</h4>
+
+<table>
+<tr>
+<th>Item</th>
+<th>Weight</th>
+<th>Profit</th>
+<th>P/W</th>
+</tr>
+<tr>
+<td>A</td><td>10</td><td>60</td><td>6</td>
+</tr>
+<tr>
+<td>B</td><td>20</td><td>100</td><td>5</td>
+</tr>
+<tr>
+<td>C</td><td>30</td><td>120</td><td>4</td>
+</tr>
+</table>
+
+<p><strong>Capacity = 50 kg</strong></p>
+
+<p>
+Order: A → B → C
+</p>
+
+<ul>
+<li>Take all A: 10 kg, profit = 60, remaining = 40.</li>
+<li>Take all B: 20 kg, profit = 100, remaining = 20.</li>
+<li>C weighs 30 kg but only 20 kg fits.</li>
+<li>Take 20/30 of C.</li>
+</ul>
+
+<div class="formula">
+Profit from C = 120 × (20/30) = 80
+</div>
+
+<div class="formula">
+Total profit = 60 + 100 + 80 = 240
+</div>
+</div>
+
+<div class="block">
+<h4>Algorithm</h4>
+
+<pre>
+1. Calculate profit/weight.
+2. Sort in decreasing ratio.
+3. Start with empty knapsack.
+4. Take complete item if it fits.
+5. Otherwise take the fraction that fits.
+6. Stop when capacity is full.
+</pre>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<p>
+Calculating ratios: O(n)<br>
+Sorting: O(n log n)<br>
+Selection: O(n)
+</p>
+
+<div class="formula">
+Overall: O(n log n)
+</div>
+</div>
+
+<div class="block full">
+<div class="warning">
+<strong>Common mistake:</strong>
+"Fractional" does not mean you can take unlimited amounts of an item.
+You can only divide the quantity that actually exists.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 3 -->
+
+<article class="topic" data-title="huffman coding huffman tree">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">03</span>
+
+<span class="topic-title">
+<h3>Huffman Coding</h3>
+<p>Compression using a greedy binary tree.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>What is Huffman Coding?</h4>
+
+<div class="definition">
+Huffman coding is a greedy lossless compression technique that creates
+variable-length, prefix-free binary codes based on symbol frequencies.
+</div>
+</div>
+
+<div class="block">
+<h4>Main idea</h4>
+
+<ul>
+<li>Frequently occurring symbols get shorter codes.</li>
+<li>Rare symbols get longer codes.</li>
+<li>Codes are prefix-free.</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Greedy rule</h4>
+
+<div class="formula">
+Repeatedly combine the TWO LOWEST frequencies.
+</div>
+</div>
+
+<div class="block full">
+<h4>Complete example</h4>
+
+<table>
+<tr>
+<th>Character</th>
+<th>Frequency</th>
+</tr>
+<tr><td>A</td><td>5</td></tr>
+<tr><td>B</td><td>9</td></tr>
+<tr><td>C</td><td>12</td></tr>
+<tr><td>D</td><td>13</td></tr>
+<tr><td>E</td><td>16</td></tr>
+<tr><td>F</td><td>45</td></tr>
+</table>
+
+<p>Combine the two smallest repeatedly:</p>
+
+<pre>
+5 + 9   = 14
+12 + 13 = 25
+14 + 16 = 30
+25 + 30 = 55
+45 + 55 = 100
+</pre>
+</div>
+
+<div class="block full">
+<h4>Tree</h4>
+
+<div class="tree">
+<pre>
+                         100
+                        /   \
+                    F(45)    55
+                            /  \
+                          25    30
+                         / \   / \
+                      C(12) D(13) 14 E(16)
+                                  / \
+                                A(5) B(9)
+</pre>
+</div>
+
+<p style="margin-top:12px">
+Assign <strong>0 to left</strong> and <strong>1 to right</strong>.
+Then trace from the root to each character.
+</p>
+</div>
+
+<div class="block">
+<h4>Codes</h4>
+
+<table>
+<tr><th>Character</th><th>Code</th></tr>
+<tr><td>F</td><td>0</td></tr>
+<tr><td>C</td><td>100</td></tr>
+<tr><td>D</td><td>101</td></tr>
+<tr><td>E</td><td>111</td></tr>
+<tr><td>A</td><td>1100</td></tr>
+<tr><td>B</td><td>1101</td></tr>
+</table>
+</div>
+
+<div class="block">
+<h4>Why is E = 111?</h4>
+
+<pre>
+Root
+ ↓ RIGHT = 1
+55
+ ↓ RIGHT = 1
+30
+ ↓ RIGHT = 1
+E
+
+Therefore E = 111
+</pre>
+</div>
+
+<div class="block">
+<h4>Prefix-free</h4>
+
+<p>
+No complete code is the prefix of another complete code.
+This makes decoding unambiguous.
+</p>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<div class="formula">
+O(n log n)
+</div>
+
+<p>
+Using a min-heap / priority queue.
+</p>
+</div>
+
+<div class="block full">
+<div class="exam">
+<strong>Numerical question method:</strong>
+Write frequencies → repeatedly select two smallest → combine →
+reinsert → repeat → draw tree → assign 0/1 → trace codes.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 4 -->
+
+<article class="topic" data-title="job sequencing deadlines">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">04</span>
+
+<span class="topic-title">
+<h3>Job Sequencing with Deadlines</h3>
+<p>Highest profit first, latest available slot.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Problem</h4>
+
+<div class="definition">
+Given jobs with deadlines and profits, where each job takes one unit of time,
+schedule jobs to maximize total profit while completing every selected job
+before or at its deadline.
+</div>
+</div>
+
+<div class="block">
+<h4>Greedy rule</h4>
+
+<ol>
+<li>Sort jobs by decreasing profit.</li>
+<li>Take the most profitable job first.</li>
+<li>Place it in the latest free slot ≤ its deadline.</li>
+</ol>
+</div>
+
+<div class="block">
+<h4>Why the latest slot?</h4>
+
+<p>
+Putting a job as late as possible preserves earlier slots for jobs having
+earlier deadlines.
+</p>
+</div>
+
+<div class="block full">
+<h4>Example</h4>
+
+<table>
+<tr>
+<th>Job</th>
+<th>Deadline</th>
+<th>Profit</th>
+</tr>
+<tr><td>J1</td><td>2</td><td>100</td></tr>
+<tr><td>J2</td><td>1</td><td>19</td></tr>
+<tr><td>J3</td><td>2</td><td>27</td></tr>
+<tr><td>J4</td><td>1</td><td>25</td></tr>
+<tr><td>J5</td><td>3</td><td>15</td></tr>
+</table>
+
+<p>Sort by profit:</p>
+
+<div class="formula">
+J1 → J3 → J4 → J2 → J5
+</div>
+
+<p>Maximum deadline = 3, therefore:</p>
+
+<pre>
+Slot 1 | Slot 2 | Slot 3
+</pre>
+
+<p>
+J1 → slot 2<br>
+J3 → slot 1<br>
+J4 → no slot<br>
+J2 → no slot<br>
+J5 → slot 3
+</p>
+
+<pre>
+Slot 1 | Slot 2 | Slot 3
+  J3   |   J1   |   J5
+</pre>
+
+<div class="formula">
+Total profit = 27 + 100 + 15 = 142
+</div>
+</div>
+
+<div class="block">
+<h4>Pseudocode</h4>
+
+<pre>
+sort jobs by decreasing profit
+
+create empty slots
+
+for each job:
+    for t = deadline down to 1:
+        if slot[t] is empty:
+            slot[t] = job
+            break
+</pre>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<div class="formula">
+O(n²)
+</div>
+
+<p>
+For the basic implementation where we search backwards for a free slot.
+</p>
+</div>
+
+<div class="block full">
+<div class="warning">
+Common mistake: Don't place the highest-profit job in the earliest free slot.
+Always try the latest available slot before its deadline.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 5 -->
+
+<article class="topic" data-title="minimum spanning tree mst">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">05</span>
+
+<span class="topic-title">
+<h3>Minimum Spanning Tree</h3>
+<p>Connect every vertex with minimum total weight.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>First understand: Graph</h4>
+
+<p>
+A graph consists of vertices and edges. In a weighted graph, each edge
+has a value such as cost, distance or time.
+</p>
+</div>
+
+<div class="block">
+<h4>Spanning Tree</h4>
+
+<div class="definition">
+A spanning tree is a subgraph that connects all vertices of a connected
+graph without containing any cycle.
+</div>
+
+<div class="formula">
+For n vertices → exactly n − 1 edges
+</div>
+</div>
+
+<div class="block">
+<h4>Minimum Spanning Tree</h4>
+
+<div class="definition">
+An MST is a spanning tree whose total edge weight is minimum among all
+possible spanning trees.
+</div>
+</div>
+
+<div class="block full">
+<h4>Important properties</h4>
+
+<ul>
+<li>Connects every vertex.</li>
+<li>Contains no cycle.</li>
+<li>Contains exactly V − 1 edges.</li>
+<li>Applies to connected weighted undirected graphs.</li>
+<li>There can be multiple MSTs with the same total weight.</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Prim</h4>
+
+<p>
+Starts with one vertex and repeatedly adds the cheapest edge that connects
+the current tree to an unvisited vertex.
+</p>
+</div>
+
+<div class="block">
+<h4>Kruskal</h4>
+
+<p>
+Sorts all edges by increasing weight and repeatedly selects the cheapest
+edge that does not create a cycle.
+</p>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 6 -->
+
+<article class="topic" data-title="prim algorithm prims">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">06</span>
+
+<span class="topic-title">
+<h3>Prim's Algorithm</h3>
+<p>Grow one connected tree from a starting vertex.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Core idea</h4>
+
+<div class="formula">
+Start at a vertex → choose cheapest outgoing edge → add new vertex → repeat
+</div>
+</div>
+
+<div class="block full">
+<h4>Execution example</h4>
+
+<pre>
+       2
+   A-------B
+   |       |
+  6|       |3
+   |       |
+   C-------D
+       1
+</pre>
+
+<p>Start at A.</p>
+
+<ol>
+<li>A → cheapest edge is A-B = 2.</li>
+<li>Current tree = A,B. Cheapest edge leaving it = B-D = 3.</li>
+<li>Current tree = A,B,D. Cheapest edge to new vertex = D-C = 1.</li>
+</ol>
+
+<div class="formula">
+MST weight = 2 + 3 + 1 = 6
+</div>
+</div>
+
+<div class="block">
+<h4>Algorithm</h4>
+
+<pre>
+Choose starting vertex.
+
+While not all vertices are included:
+
+    find minimum-weight edge
+    connecting tree to an
+    unvisited vertex
+
+    add edge and vertex
+</pre>
+</div>
+
+<div class="block">
+<h4>Memory trick</h4>
+
+<div class="note">
+<strong>Prim = Grow.</strong><br>
+Always think about the current tree and its cheapest way to reach a new vertex.
+</div>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<p>
+With adjacency matrix/simple implementation:
+</p>
+
+<div class="formula">
+O(V²)
+</div>
+
+<p>
+With a binary heap and adjacency list, it can be:
+</p>
+
+<div class="formula">
+O(E log V)
+</div>
+</div>
+
+<div class="block full">
+<div class="exam">
+For an exam numerical: mark the starting vertex, list the candidate
+outgoing edges at every step, circle the chosen minimum, then calculate
+the final total.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 7 -->
+
+<article class="topic" data-title="kruskal algorithm kruskals cycle">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">07</span>
+
+<span class="topic-title">
+<h3>Kruskal's Algorithm</h3>
+<p>Sort edges → choose cheapest → reject cycles.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Core idea</h4>
+
+<div class="formula">
+Sort ALL edges → take cheapest edge → reject if it creates a cycle
+</div>
+</div>
+
+<div class="block">
+<h4>Execution</h4>
+
+<ol>
+<li>List every edge.</li>
+<li>Sort edges by increasing weight.</li>
+<li>Take the smallest edge.</li>
+<li>Check whether it creates a cycle.</li>
+<li>If no cycle, add it.</li>
+<li>Continue until V − 1 edges are selected.</li>
+</ol>
+</div>
+
+<div class="block">
+<h4>Cycle detection</h4>
+
+<p>
+If the two endpoints of an edge are already connected through selected
+edges, adding that edge creates a cycle.
+</p>
+
+<div class="warning">
+<strong>Cycle → reject the edge.</strong>
+</div>
+</div>
+
+<div class="block full">
+<h4>Example</h4>
+
+<pre>
+       2
+   A-------B
+   |       |
+  6|       |3
+   |       |
+   C-------D
+       1
+</pre>
+
+<table>
+<tr>
+<th>Edge</th>
+<th>Weight</th>
+<th>Action</th>
+</tr>
+<tr>
+<td>C-D</td>
+<td>1</td>
+<td>Take</td>
+</tr>
+<tr>
+<td>A-B</td>
+<td>2</td>
+<td>Take</td>
+</tr>
+<tr>
+<td>B-D</td>
+<td>3</td>
+<td>Take</td>
+</tr>
+<tr>
+<td>A-C</td>
+<td>6</td>
+<td>Stop — already V−1 edges</td>
+</tr>
+</table>
+
+<div class="formula">
+MST = {C-D, A-B, B-D}, weight = 6
+</div>
+</div>
+
+<div class="block">
+<h4>Prim vs Kruskal</h4>
+
+<table>
+<tr><th>Prim</th><th>Kruskal</th></tr>
+<tr><td>Starts with vertex</td><td>Starts with edges</td></tr>
+<tr><td>Grows one tree</td><td>Builds components initially</td></tr>
+<tr><td>Cheapest outgoing edge</td><td>Cheapest global edge</td></tr>
+<tr><td>New vertex</td><td>No cycle</td></tr>
+</table>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<div class="formula">
+O(E log E)
+</div>
+
+<p>
+Main reason: sorting the edges. Since E is at most roughly V² in a simple
+graph, this is also commonly written as O(E log V).
+</p>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 8 -->
+
+<article class="topic" data-title="dijkstra single source shortest path shortest path">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">08</span>
+
+<span class="topic-title">
+<h3>Single-Source Shortest Path — Dijkstra</h3>
+<p>Shortest paths from one source to every vertex.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>What problem does Dijkstra solve?</h4>
+
+<div class="definition">
+Given a weighted graph and one starting vertex (source), Dijkstra's algorithm
+finds the shortest distance from that source to every other reachable vertex.
+</div>
+</div>
+
+<div class="block">
+<h4>Critical restriction</h4>
+
+<div class="warning">
+Dijkstra's algorithm does not work correctly with negative edge weights.
+</div>
+</div>
+
+<div class="block">
+<h4>Key idea</h4>
+
+<p>
+At every step, select the unvisited vertex having the smallest currently
+known distance from the source. Once finalized, its shortest distance is known.
+</p>
+</div>
+
+<div class="block full">
+<h4>Relaxation</h4>
+
+<p>
+Suppose we know the distance to A and there is an edge A → B.
+We test whether going through A gives a shorter route to B.
+</p>
+
+<div class="formula">
+newDistance = distance[A] + weight(A,B)
+</div>
+
+<p>
+If newDistance is smaller than the current distance[B], update distance[B].
+</p>
+</div>
+
+<div class="block full">
+<h4>Worked example</h4>
+
+<pre>
+        4
+   A---------B
+   |         |
+  2|         |1
+   |         |
+   C---------D
+        3
+
+Also:
+B-C = 5
+</pre>
+
+<p>Start = A.</p>
+
+<table>
+<tr>
+<th>Vertex</th>
+<th>Initial distance</th>
+</tr>
+<tr><td>A</td><td>0</td></tr>
+<tr><td>B</td><td>∞</td></tr>
+<tr><td>C</td><td>∞</td></tr>
+<tr><td>D</td><td>∞</td></tr>
+</table>
+
+<p><strong>Step 1:</strong> A is smallest. Finalize A.</p>
+
+<p>
+From A:
+</p>
+
+<ul>
+<li>B = 0 + 4 = 4</li>
+<li>C = 0 + 2 = 2</li>
+</ul>
+
+<p><strong>Step 2:</strong> C has smallest distance = 2.</p>
+
+<p>
+From C:
+D = 2 + 3 = 5
+</p>
+
+<p><strong>Step 3:</strong> B has distance 4.</p>
+
+<p>
+From B:
+D = 4 + 1 = 5, so D remains 5.
+</p>
+
+<div class="formula">
+Final distances: A=0, C=2, B=4, D=5
+</div>
+</div>
+
+<div class="block">
+<h4>Algorithm</h4>
+
+<pre>
+distance[source] = 0
+all other distances = infinity
+
+repeat:
+
+    choose unvisited vertex
+    with smallest distance
+
+    mark it visited
+
+    for every neighbour:
+
+        calculate alternative distance
+
+        if alternative is smaller:
+            update distance
+</pre>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<p>Simple array / adjacency matrix:</p>
+
+<div class="formula">
+O(V²)
+</div>
+
+<p>Binary heap implementation:</p>
+
+<div class="formula">
+O((V + E) log V)
+</div>
+</div>
+
+<div class="block full">
+<div class="exam">
+<strong>Don't confuse Dijkstra with Prim.</strong><br><br>
+Prim minimizes the cost of a network connecting all vertices.
+Dijkstra minimizes distance from ONE SOURCE to each vertex.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 9 -->
+
+<article class="topic" data-title="analysis greedy analysis">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">09</span>
+
+<span class="topic-title">
+<h3>Analysis of Greedy Algorithms</h3>
+<p>Correctness, complexity and when greedy is valid.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block">
+<h4>What to analyze?</h4>
+
+<ul>
+<li>Does the greedy choice lead to an optimal solution?</li>
+<li>Does the problem have optimal substructure?</li>
+<li>What is the time complexity?</li>
+<li>What data structure is used?</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Advantages</h4>
+
+<ul>
+<li>Usually simple to understand.</li>
+<li>Often efficient.</li>
+<li>Usually requires less computation than brute force.</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Limitations</h4>
+
+<ul>
+<li>Does not work for every optimization problem.</li>
+<li>Local optimum can lead to a non-optimal final solution.</li>
+<li>Correctness must be established for the particular problem.</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Complexities to remember</h4>
+
+<table>
+<tr><th>Problem</th><th>Typical basic complexity</th></tr>
+<tr><td>Fractional Knapsack</td><td>O(n log n)</td></tr>
+<tr><td>Huffman</td><td>O(n log n)</td></tr>
+<tr><td>Job Sequencing</td><td>O(n²)</td></tr>
+<tr><td>Prim</td><td>O(V²)</td></tr>
+<tr><td>Kruskal</td><td>O(E log E)</td></tr>
+<tr><td>Dijkstra</td><td>O(V²)</td></tr>
+</table>
+</div>
+
+</div>
+</div>
+</article>
+
+</section>
+
+
+<!-- =========================================================
+     BACKTRACKING
+========================================================= -->
+
+<section class="section" id="backtracking">
+
+<div class="section-head">
+<div>
+<div class="eyebrow">02 / Backtracking</div>
+<h2>Try.<br>Reject.<br>Go back.</h2>
+</div>
+
+<p>
+Backtracking systematically searches through possible solutions while
+abandoning a partial solution as soon as it violates a constraint.
+</p>
+</div>
+
+
+<!-- 10 -->
+
+<article class="topic" data-title="backtracking general method">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">10</span>
+
+<span class="topic-title">
+<h3>General Backtracking Method</h3>
+<p>Build a solution one decision at a time.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Basic idea</h4>
+
+<div class="definition">
+Backtracking is a systematic search technique that constructs a solution
+incrementally and abandons a partial solution as soon as it is determined
+that it cannot lead to a valid solution.
+</div>
+</div>
+
+<div class="block">
+<h4>Simple mental model</h4>
+
+<div class="formula">
+Choose → Check → Continue OR Undo → Try another choice
+</div>
+</div>
+
+<div class="block">
+<h4>Example</h4>
+
+<p>
+Imagine a maze. You move forward. If you reach a dead end, you go backward
+to the previous decision point and try another path.
+</p>
+</div>
+
+<div class="block full">
+<h4>Generic pseudocode</h4>
+
+<pre>
+BACKTRACK(solution):
+
+    if solution is complete:
+        report solution
+        return
+
+    for each possible choice:
+
+        if choice is valid:
+
+            make choice
+
+            BACKTRACK(solution)
+
+            undo choice
+</pre>
+</div>
+
+<div class="block">
+<h4>State-space tree</h4>
+
+<p>
+Every node represents a partial solution. Each branch represents a possible
+next decision.
+</p>
+</div>
+
+<div class="block">
+<h4>Pruning</h4>
+
+<p>
+Pruning means stopping exploration of a branch when we already know that
+branch cannot produce a valid solution.
+</p>
+</div>
+
+<div class="block full">
+<div class="exam">
+<strong>Exam definition:</strong>
+Backtracking solves constraint problems by constructing candidates
+incrementally and abandoning a candidate as soon as it fails to satisfy
+the constraints.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 11 -->
+
+<article class="topic" data-title="8 queens eight queens n queens">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">11</span>
+
+<span class="topic-title">
+<h3>8-Queens Problem</h3>
+<p>Place 8 queens so no two attack each other.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Problem statement</h4>
+
+<div class="definition">
+Place eight queens on an 8 × 8 chessboard so that no two queens attack
+each other.
+</div>
+</div>
+
+<div class="block">
+<h4>Queens attack along</h4>
+
+<ul>
+<li>Same row</li>
+<li>Same column</li>
+<li>Same diagonal</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Backtracking strategy</h4>
+
+<p>
+Usually place one queen per row. For each row, try columns one by one.
+If a position is safe, place the queen and move to the next row.
+If no column works, go back to the previous row.
+</p>
+</div>
+
+<div class="block full">
+<h4>Safety conditions</h4>
+
+<p>For a new queen at (row, column):</p>
+
+<ul>
+<li>No previous queen in the same column.</li>
+<li>No previous queen on the same diagonal.</li>
+</ul>
+
+<div class="formula">
+Same diagonal if |r1 − r2| = |c1 − c2|
+</div>
+</div>
+
+<div class="block">
+<h4>Example solution</h4>
+
+<pre>
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+</pre>
+
+<p>
+The 4 × 4 example demonstrates the same principle used for 8 queens.
+Each row has one queen and no two attack each other.
+</p>
+</div>
+
+<div class="block">
+<h4>Algorithm</h4>
+
+<pre>
+solve(row):
+
+    if row == N:
+        return true
+
+    for col = 0 to N-1:
+
+        if position is safe:
+
+            place queen
+
+            if solve(row + 1):
+                return true
+
+            remove queen
+
+    return false
+</pre>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<p>
+The naive search can be exponential. A common upper-bound description
+for N-Queens is O(N!), depending on the formulation/pruning.
+</p>
+
+<div class="warning">
+For mid-sem, focus more on the backtracking procedure and board execution
+than on deriving an exact tight complexity bound.
+</div>
+</div>
+
+<div class="block full">
+<div class="exam">
+<strong>Numerical/trace question:</strong>
+Draw the board after every placement and mark where backtracking occurs.
+Do not simply write the final arrangement.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 12 -->
+
+<article class="topic" data-title="graph coloring m coloring">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">12</span>
+
+<span class="topic-title">
+<h3>Graph Coloring</h3>
+<p>Color vertices without giving adjacent vertices the same color.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Problem</h4>
+
+<div class="definition">
+Given a graph and m colors, assign a color to every vertex such that
+no two adjacent vertices have the same color.
+</div>
+</div>
+
+<div class="block">
+<h4>Example</h4>
+
+<pre>
+A ----- B
+|       |
+|       |
+C ----- D
+</pre>
+
+<p>
+If A and B are adjacent, they cannot have the same color.
+Likewise for every connected pair.
+</p>
+</div>
+
+<div class="block">
+<h4>Backtracking idea</h4>
+
+<ol>
+<li>Start with the first vertex.</li>
+<li>Try color 1.</li>
+<li>If valid, continue.</li>
+<li>If invalid, try another color.</li>
+<li>If no color works, backtrack.</li>
+</ol>
+</div>
+
+<div class="block full">
+<h4>Safety condition</h4>
+
+<p>
+A color can be assigned to vertex v only if none of v's already-colored
+neighbors has that color.
+</p>
+
+<pre>
+color(v) is safe
+if for every adjacent u:
+    color[u] != color[v]
+</pre>
+</div>
+
+<div class="block">
+<h4>Pseudocode</h4>
+
+<pre>
+colorVertex(v):
+
+    if v == V:
+        return true
+
+    for c = 1 to m:
+
+        if safe(v,c):
+
+            color[v] = c
+
+            if colorVertex(v+1):
+                return true
+
+            color[v] = 0
+
+    return false
+</pre>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<div class="formula">
+O(m^V)
+</div>
+
+<p>
+In the worst case, each of V vertices can try m colors.
+</p>
+</div>
+
+<div class="block full">
+<div class="exam">
+<strong>Remember:</strong>
+Graph coloring asks "which color can this vertex safely take?"
+If no color is possible, backtrack.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 13 -->
+
+<article class="topic" data-title="hamiltonian cycle hamiltonian">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">13</span>
+
+<span class="topic-title">
+<h3>Hamiltonian Cycle</h3>
+<p>Visit every vertex exactly once and return to the start.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block full">
+<h4>Definition</h4>
+
+<div class="definition">
+A Hamiltonian cycle is a cycle in a graph that visits every vertex exactly
+once and returns to the starting vertex.
+</div>
+</div>
+
+<div class="block">
+<h4>Important distinction</h4>
+
+<p>
+A Hamiltonian cycle focuses on visiting every <strong>vertex</strong> exactly
+once.
+</p>
+
+<p>
+An Eulerian cycle focuses on visiting every <strong>edge</strong> exactly
+once.
+</p>
+</div>
+
+<div class="block">
+<h4>Backtracking approach</h4>
+
+<ol>
+<li>Choose a starting vertex.</li>
+<li>Add an adjacent unvisited vertex.</li>
+<li>Continue building the path.</li>
+<li>Reject a vertex if it is already used.</li>
+<li>If all vertices are included, check whether the last vertex connects to the start.</li>
+<li>If not, backtrack.</li>
+</ol>
+</div>
+
+<div class="block full">
+<h4>Validity conditions</h4>
+
+<p>A candidate next vertex must:</p>
+
+<ul>
+<li>Be adjacent to the current vertex.</li>
+<li>Not already appear in the path.</li>
+<li>At the end, connect back to the starting vertex.</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Pseudocode</h4>
+
+<pre>
+hamiltonian(pos):
+
+    if pos == V:
+        return edge(last, start)
+
+    for each vertex v:
+
+        if safe(v):
+
+            path[pos] = v
+
+            if hamiltonian(pos+1):
+                return true
+
+            remove v
+
+    return false
+</pre>
+</div>
+
+<div class="block">
+<h4>Complexity</h4>
+
+<div class="formula">
+O(V!)
+</div>
+
+<p>
+Worst-case backtracking search is exponential/factorial in nature.
+</p>
+</div>
+
+<div class="block full">
+<div class="exam">
+<strong>Memory trick:</strong>
+Hamiltonian = every vertex once + return home.
+</div>
+</div>
+
+</div>
+</div>
+</article>
+
+
+<!-- 14 -->
+
+<article class="topic" data-title="backtracking analysis complexity">
+<button class="topic-header" onclick="toggleTopic(this)">
+<span class="topic-num">14</span>
+
+<span class="topic-title">
+<h3>Analysis of Backtracking</h3>
+<p>Search tree, pruning and exponential complexity.</p>
+</span>
+
+<span class="topic-check"
+onclick="event.stopPropagation();markTopic(this)">✓</span>
+
+<span class="topic-arrow">›</span>
+</button>
+
+<div class="topic-content">
+
+<div class="content-grid">
+
+<div class="block">
+<h4>Why can it be expensive?</h4>
+
+<p>
+Backtracking may have to explore a large number of possible combinations.
+In the worst case, the search tree grows exponentially.
+</p>
+</div>
+
+<div class="block">
+<h4>Why is it still useful?</h4>
+
+<p>
+It avoids exploring branches that are already known to be invalid.
+This is called pruning.
+</p>
+</div>
+
+<div class="block full">
+<h4>Search tree</h4>
+
+<pre>
+                    Start
+                  /   |   \
+                 A    B    C
+                / \       / \
+               X   Y     X   Y
+              /
+         invalid → prune
+</pre>
+
+<p>
+Instead of exploring every possible branch, the algorithm cuts off
+invalid branches as early as possible.
+</p>
+</div>
+
+<div class="block">
+<h4>Typical complexities</h4>
+
+<table>
+<tr><th>Problem</th><th>Typical worst-case idea</th></tr>
+<tr><td>Graph Coloring</td><td>O(m^V)</td></tr>
+<tr><td>Hamiltonian Cycle</td><td>O(V!)</td></tr>
+<tr><td>N-Queens</td><td>Exponential / often bounded by O(N!) for search formulations</td></tr>
+</table>
+</div>
+
+<div class="block">
+<h4>Advantages</h4>
+
+<ul>
+<li>Simple way to solve constraint problems.</li>
+<li>Can find one or all solutions.</li>
+<li>Pruning can dramatically reduce actual work.</li>
+</ul>
+</div>
+
+<div class="block">
+<h4>Disadvantages</h4>
+
+<ul>
+<li>Worst-case runtime can be extremely high.</li>
+<li>Not suitable for very large search spaces without strong pruning.</li>
+</ul>
+</div>
+
+</div>
+</div>
+</article>
+
+</section>
+
+
+<!-- =========================================================
+     REVISION
+========================================================= -->
+
+<section class="section" id="revision">
+
+<div class="section-head">
+<div>
+<div class="eyebrow">03 / Final Revision</div>
+<h2>What actually<br>needs memorizing.</h2>
+</div>
+
+<p>
+Use this section the night before the exam. The detailed notes above are
+for learning; this section is for recall.
+</p>
+</div>
+
+
+<div class="summary">
+
+<h2>Unit II in one page.</h2>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<strong>Greedy</strong>
+<span>Choose locally best feasible option.</span>
+</div>
+
+<div class="summary-card">
+<strong>Knapsack</strong>
+<span>Fractional → sort by profit/weight.</span>
+</div>
+
+<div class="summary-card">
+<strong>Huffman</strong>
+<span>Combine two smallest frequencies repeatedly.</span>
+</div>
+
+<div class="summary-card">
+<strong>Job Sequencing</strong>
+<span>Highest profit first → latest available slot.</span>
+</div>
+
+<div class="summary-card">
+<strong>MST</strong>
+<span>Connect all vertices with V−1 edges, no cycle, minimum weight.</span>
+</div>
+
+<div class="summary-card">
+<strong>Prim</strong>
+<span>Start vertex → cheapest outgoing edge → grow tree.</span>
+</div>
+
+<div class="summary-card">
+<strong>Kruskal</strong>
+<span>Sort edges → cheapest non-cycle edge.</span>
+</div>
+
+<div class="summary-card">
+<strong>Dijkstra</strong>
+<span>Shortest paths from one source; no negative weights.</span>
+</div>
+
+<div class="summary-card">
+<strong>Backtracking</strong>
+<span>Choose → check → recurse → undo if necessary.</span>
+</div>
+
+<div class="summary-card">
+<strong>8 Queens</strong>
+<span>No same row, column or diagonal.</span>
+</div>
+
+<div class="summary-card">
+<strong>Graph Coloring</strong>
+<span>Adjacent vertices cannot share a color.</span>
+</div>
+
+<div class="summary-card">
+<strong>Hamiltonian</strong>
+<span>Every vertex exactly once + return to start.</span>
+</div>
+
+</div>
+</div>
+
+
+<div style="margin-top:30px">
+
+<div class="eyebrow">Complexity sheet</div>
+
+<table>
+<tr>
+<th>Algorithm</th>
+<th>Remember</th>
+</tr>
+
+<tr>
+<td>Fractional Knapsack</td>
+<td>O(n log n)</td>
+</tr>
+
+<tr>
+<td>Huffman Coding</td>
+<td>O(n log n)</td>
+</tr>
+
+<tr>
+<td>Job Sequencing</td>
+<td>O(n²) basic</td>
+</tr>
+
+<tr>
+<td>Prim</td>
+<td>O(V²) basic</td>
+</tr>
+
+<tr>
+<td>Kruskal</td>
+<td>O(E log E)</td>
+</tr>
+
+<tr>
+<td>Dijkstra</td>
+<td>O(V²) basic</td>
+</tr>
+
+<tr>
+<td>Graph Coloring</td>
+<td>O(m^V)</td>
+</tr>
+
+<tr>
+<td>Hamiltonian Cycle</td>
+<td>O(V!)</td>
+</tr>
+
+<tr>
+<td>N-Queens</td>
+<td>Exponential / commonly O(N!) search bound</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div style="margin-top:35px">
+
+<div class="eyebrow">Final checklist</div>
+
+<div class="checklist">
+
+<label class="check-item">
+<input type="checkbox">
+I can define the Greedy Method.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can solve Fractional Knapsack.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can construct a Huffman Tree.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can generate Huffman binary codes.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can solve Job Sequencing.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I know the difference between Prim and Kruskal.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can solve an MST numerical.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can solve Dijkstra step-by-step.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I understand Backtracking.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can trace an 8-Queens problem.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can solve Graph Coloring using backtracking.
+</label>
+
+<label class="check-item">
+<input type="checkbox">
+I can explain Hamiltonian Cycle.
+</label>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+
+<footer>
+<div class="container">
+<span>DAA / UNIT II / IPU MID-SEM</span>
+<span>Learn → Practice → Revise</span>
+</div>
+</footer>
+
+
+<script>
+
+/* =========================================================
+   TOPIC ACCORDION
+========================================================= */
+
+function toggleTopic(button){
+
+  const topic = button.closest(".topic");
+
+  topic.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   MARK TOPIC COMPLETE
+========================================================= */
+
+const topics = [...document.querySelectorAll(".topic")];
+
+function markTopic(check){
+
+  const topic = check.closest(".topic");
+
+  topic.classList.toggle("completed");
+
+  saveProgress();
+
+  updateProgress();
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function updateProgress(){
+
+  const completed =
+    topics.filter(t => t.classList.contains("completed")).length;
+
+  const total = topics.length;
+
+  const percentage =
+    Math.round((completed / total) * 100);
+
+  document.getElementById("progressCount")
+    .textContent = `${completed} / ${total}`;
+
+  document.getElementById("progressPercent")
+    .textContent = `${percentage}%`;
+
+  document.getElementById("progressFill")
+    .style.width = `${percentage}%`;
+}
+
+
+/* =========================================================
+   SAVE PROGRESS
+========================================================= */
+
+function saveProgress(){
+
+  const state = topics.map(t =>
+    t.classList.contains("completed")
+  );
+
+  localStorage.setItem(
+    "daa-unit-2-progress",
+    JSON.stringify(state)
+  );
+}
+
+
+/* =========================================================
+   RESTORE PROGRESS
+========================================================= */
+
+function restoreProgress(){
+
+  const saved =
+    localStorage.getItem("daa-unit-2-progress");
+
+  if(!saved){
+    updateProgress();
+    return;
+  }
+
+  try{
+
+    const state = JSON.parse(saved);
+
+    topics.forEach((topic,index)=>{
+
+      if(state[index]){
+        topic.classList.add("completed");
+      }
+
+    });
+
+  }catch(error){
+
+    console.log("Progress could not be restored.");
+
+  }
+
+  updateProgress();
+}
+
+
+/* =========================================================
+   EXPAND / COLLAPSE
+========================================================= */
+
+function expandAll(){
+
+  topics.forEach(topic =>
+    topic.classList.add("open")
+  );
+
+}
+
+function collapseAll(){
+
+  topics.forEach(topic =>
+    topic.classList.remove("open")
+  );
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+const search = document.getElementById("search");
+
+search.addEventListener("input",()=>{
+
+  const query =
+    search.value.toLowerCase().trim();
+
+  topics.forEach(topic=>{
+
+    const title =
+      topic.dataset.title.toLowerCase();
+
+    const text =
+      topic.innerText.toLowerCase();
+
+    const matches =
+      !query ||
+      title.includes(query) ||
+      text.includes(query);
+
+    topic.style.display =
+      matches ? "block" : "none";
+
+  });
+
+});
+
+
+/* =========================================================
+   CHECKLIST PERSISTENCE
+========================================================= */
+
+const checklist =
+  [...document.querySelectorAll(".check-item input")];
+
+checklist.forEach((box,index)=>{
+
+  box.checked =
+    localStorage.getItem(
+      `daa-check-${index}`
+    ) === "true";
+
+  box.addEventListener("change",()=>{
+
+    localStorage.setItem(
+      `daa-check-${index}`,
+      box.checked
+    );
+
+  });
+
+});
+
+
+restoreProgress();
+
+</script>
+
+</body>
+</html>
